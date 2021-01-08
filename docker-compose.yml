@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+
+  mysql-development:
+    image: mysql:8.0.17
+    environment:
+      TZ: America/Sao_Paulo
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: conexa
+      MYSQL_PASSWORD: conexa!123
+      MYSQL_DATABASE: agenda
+    ports:
+      - "3306:3306"
