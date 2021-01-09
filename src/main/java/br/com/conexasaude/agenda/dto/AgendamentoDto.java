@@ -15,6 +15,7 @@ public class AgendamentoDto {
     @JsonProperty("id_paciente")
     private Long idPaciente;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonProperty("data_hora_atendimento")
     private LocalDateTime dataHoraAtendimento;
 
