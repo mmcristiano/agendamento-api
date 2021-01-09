@@ -1,6 +1,8 @@
 package br.com.conexasaude.agenda.controller;
 
+import br.com.conexasaude.agenda.dto.MedicoDto;
 import br.com.conexasaude.agenda.dto.PacienteDto;
+import br.com.conexasaude.agenda.dto.parse.MedicoParser;
 import br.com.conexasaude.agenda.model.Medico;
 import br.com.conexasaude.agenda.model.Paciente;
 import br.com.conexasaude.agenda.service.MedicoService;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/medico")
@@ -21,9 +25,23 @@ public class MedicoController {
     @Autowired
     private MedicoService service;
 
+    @Autowired
+    private MedicoParser parser;
+
     @GetMapping
-    public ResponseEntity<?> get() {
-        return new ResponseEntity<List<?>>(service.get(), HttpStatus.OK);
+    public ResponseEntity<List<MedicoDto>> get() {
+        List<Medico> medicos = service.get();
+
+        // Retornar somente agendamentos de hoje.
+        medicos.stream().forEach(
+            medico -> {
+                medico.getAgendamentos().removeIf(agendamento -> !agendamento.getDataHoraAgendamento().toLocalDate().equals(LocalDate.now()));
+            }
+        );
+
+
+        return new ResponseEntity<List<MedicoDto>>(parser.parse(medicos),
+                HttpStatus.OK);
     }
 
 }

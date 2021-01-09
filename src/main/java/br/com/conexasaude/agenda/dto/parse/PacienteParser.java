@@ -40,10 +40,10 @@ public class PacienteParser {
     }
 
     public List<PacienteDto> parse(List<Paciente> pacientes) {
-        List<PacienteDto> pacientesDTO = new LinkedList<>();
-        pacientes.forEach(paciente -> pacientesDTO.add(this.parse(paciente)));
+        List<PacienteDto> pacientesDto = new LinkedList<>();
+        pacientes.forEach(paciente -> pacientesDto.add(this.parse(paciente)));
 
-        return pacientesDTO;
+        return pacientesDto;
     }
 
 
