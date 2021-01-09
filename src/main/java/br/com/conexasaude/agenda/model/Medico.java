@@ -1,27 +1,25 @@
 package br.com.conexasaude.agenda.model;
 
-
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Builder
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "paciente")
-public class Paciente {
+@Table(name = "medico")
+public class Medico {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cpf;
+    private String usuario;
+    private String senha;
     private String nome;
-    private Integer idade;
-    private String telefone;
+    private String especialidade;
+    private String token;
 
 }
