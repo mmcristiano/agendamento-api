@@ -37,7 +37,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // permite requisições de login e RequestMapping
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/paciente/**").permitAll()
-                //.antMatchers("/agendamento/**").permitAll()
+                //swagger
+                .antMatchers("/").permitAll()
+                .antMatchers("/swagger.json").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/swagger-ui-standalone-preset.js").permitAll()
+                .antMatchers("/swagger-ui.css").permitAll()
+                .antMatchers("/swagger-ui-bundle.js").permitAll()
+                .antMatchers("/logo.png").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/index.html").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/v2/api-docs/**").permitAll()
+
 
                 .anyRequest().authenticated()
                 .and()

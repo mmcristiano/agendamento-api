@@ -7,6 +7,10 @@ import br.com.conexasaude.agenda.model.Agendamento;
 import br.com.conexasaude.agenda.model.Paciente;
 import br.com.conexasaude.agenda.service.AgendamentoService;
 import br.com.conexasaude.agenda.service.PacienteService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("agendamento")
+@Api(value = "Agendamento",description = "Realiza agendamento de consulta", tags = { "Agendar Consulta" })
 public class AgendamentoController {
 
     @Autowired
@@ -29,6 +34,12 @@ public class AgendamentoController {
     private PacienteService pacienteService;
 
 
+    @ApiOperation(value = "Retorna uma lista de usuários")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Retorna a consulta criada"),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
+            @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
+    })
     @PostMapping
     public ResponseEntity<AgendamentoDto> agendarConsulta(@RequestBody AgendamentoDto dto) {
 
