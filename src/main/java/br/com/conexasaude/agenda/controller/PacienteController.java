@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
@@ -61,7 +63,7 @@ public class PacienteController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
     })
     @PostMapping
-    public ResponseEntity<PacienteDto> save(@RequestBody PacienteDto dto) {
+    public ResponseEntity<PacienteDto> save(@Valid  @RequestBody PacienteDto dto) {
         Paciente paciente= service.save(parser.parse(dto, new Paciente()));
 
         return new ResponseEntity<PacienteDto>(parser.parse(paciente),
@@ -75,7 +77,7 @@ public class PacienteController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
     })
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteDto> update(@PathVariable("id") Long id, @RequestBody PacienteDto dto) {
+    public ResponseEntity<PacienteDto> update(@PathVariable("id") Long id,@Valid @RequestBody PacienteDto dto) {
         Paciente paciente = service.get(id);
         Paciente pacienteNew = parser.parse(dto, paciente);
 

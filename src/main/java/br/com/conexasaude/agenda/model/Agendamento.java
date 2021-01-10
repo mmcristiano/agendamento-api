@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -26,6 +27,7 @@ public class Agendamento {
     @JoinColumn(name = "id_medico")
     private Medico medico;
 
+    @NotNull
     @Column(name = "data_hora_agendamento")
     private LocalDateTime dataHoraAgendamento;
 

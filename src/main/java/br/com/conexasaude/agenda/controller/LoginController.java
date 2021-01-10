@@ -14,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+
 @RestController
 @RequestMapping("auth")
 @Api(value = "Login",description = "Login e Logoff na aplicação", tags = { "Login/Logout" })
@@ -29,7 +32,7 @@ public class LoginController {
             @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
     })
     @PostMapping("/login")
-    public ResponseEntity<MedicoDto> login(@RequestBody LoginDto dto) {
+    public ResponseEntity<MedicoDto> login(@Valid @RequestBody LoginDto dto) {
         return new ResponseEntity<MedicoDto>(service.login(dto),HttpStatus.OK);
     }
 
