@@ -9,6 +9,7 @@ import br.com.conexasaude.agenda.model.Medico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +29,9 @@ public class MedicoParser {
 
     public MedicoDto parse(Medico medico) {
         List<AgendamentoDto> agendamentos = agendamentoParser.parse(medico.getAgendamentos());
+
+        // Retornar somente agendamentos de hoje.
+        agendamentos.removeIf(agendamento -> !agendamento.getDataHoraAtendimento().toLocalDate().equals(LocalDate.now()));
 
         return MedicoDto.builder()
                 .token(medico.getToken())

@@ -32,13 +32,17 @@ public class MedicoController {
     public ResponseEntity<List<MedicoDto>> get() {
         List<Medico> medicos = service.get();
 
-        // Retornar somente agendamentos de hoje.
+        /* Retornar somente agendamentos de hoje.
         medicos.stream().forEach(
             medico -> {
                 medico.getAgendamentos().removeIf(agendamento -> !agendamento.getDataHoraAgendamento().toLocalDate().equals(LocalDate.now()));
             }
         );
 
+         */
+
+        medicos.removeIf(medico ->
+                    !medico.equals(service.getMedicoLogado()));
 
         return new ResponseEntity<List<MedicoDto>>(parser.parse(medicos),
                 HttpStatus.OK);

@@ -4,7 +4,9 @@ import br.com.conexasaude.agenda.dto.AgendamentoDto;
 import br.com.conexasaude.agenda.dto.PacienteDto;
 import br.com.conexasaude.agenda.dto.parse.AgendamentoParser;
 import br.com.conexasaude.agenda.model.Agendamento;
+import br.com.conexasaude.agenda.model.Paciente;
 import br.com.conexasaude.agenda.service.AgendamentoService;
+import br.com.conexasaude.agenda.service.PacienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,8 +25,13 @@ public class AgendamentoController {
     @Autowired
     private AgendamentoService agendamentoService;
 
+    @Autowired
+    private PacienteService pacienteService;
+
+
     @PostMapping
     public ResponseEntity<AgendamentoDto> agendarConsulta(@RequestBody AgendamentoDto dto) {
+
         Agendamento parse = parser.parse(dto, new Agendamento());
 
         Agendamento agendamento = agendamentoService.agendarConsulta(parse);

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Builder
 @Data
@@ -23,5 +24,9 @@ public class Paciente {
     private String nome;
     private Integer idade;
     private String telefone;
+
+    @OneToMany(orphanRemoval = true,
+            mappedBy = "paciente")
+    List<Agendamento> agendamentos;
 
 }
