@@ -2,85 +2,94 @@
 
 Descrição:
 
-Precisamos construir uma API REST onde nossos médicos de plantão consigam agendar atendimentos com pacientes.
+API REST para médicos de plantão agendarem atendimentos com pacientes
 
-Precisamos de uma rota para que médicos da clínica Conexa Saúde consigam realizar login na aplicação:
+Pré requisitos:
+- Git
+- Java 8
+- Maven
+- Docker
+
+
+
+# Banco de dados
+
+Configurado via Docker.
+
+Na pasta raiz do projeto encontra-se o arquivo docker-compose.yml, para subir o banco de dados, executar o comando abaixo, via terminal: 
+
 ```
-{
-  "usuario": "medico@email.com",
-  "senha": "senhamedico"
-}
+$ docker-compose up
 ```
 
-Onde o response vai ser um token JWT com algumas informações adicionais do médico e seus agendamentos do dia:
+# Aplicação
+
+Para executar a aplicação basta executar o comando abaixo, via terminal: 
+
 ```
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-  "medico": "Dr. Daniel Santos",
-  "especialidade": "Cardiologia"
-  "agendamentos_hoje": [
-    {
-      "id_paciente": "3u84904",
-      "data_hora_atendimento": "2020-08-03 09:00:00",
-    },
-    {
-      "id_paciente": "4903ud3",
-      "data_hora_atendimento": "2020-08-03 10:00:00",
-    },
-  ]
-}
+ $ mvn spring-boot:run
 ```
-OBS: A base precisa ter alguns médicos previamente cadastrados;
+
+# Docker
+
+É possível subir a aplicação juntamente com o banco de dados, via docker.
+
+Passo a passo: 
 
 
-Também precisamos de uma rota para o médico conseguir realizar logoff:
+1) Descomentar as linhas no arquivo docker-compose.yml. 
+2) alterar o valor da propriedade 'spring.datasource.url' no arquivo 'application.properties' da aplicação.
+
+De:
+
+
 ```
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
-}
+jdbc:mysql://localhost:3306/agenda?createDatabaseIfNotExist=true
 ```
-Obs: Após realizado o logoff, token precisa ser invalidado na aplicação para que não seja possível reutilizá-lo novamente. 
-
-
-Na API também precisamos de um CRUD de pacientes com as seguintes informações:
+Para:
 ```
-{
-  "nome": "Rafael Braga",
-  "cpf": "101.202.303-11",
-  "idade": "33",
-  "telefone": "(21) 3232-6565"
-}
+jdbc:mysql://mysqldb:3306/agenda?createDatabaseIfNotExist=true
 ```
-Obs: A rota de cadastro de pacientes não precisa ser verificada com o token JWT, pois o próprio paciente vai realizar o cadastro através de uma landing page pública na web.
-
-E por fim precisamos de uma rota onde o médico logado realiza agendamento de consulta para um paciente:
+3) Na raiz da aplicação, executar via terminal o comando abaixo: 
 ```
-{
-  "data_hora_atendimento": "2020-08-03 09:00:00",
-  "id_paciente": "3u84904",
-}
+ $  mvn package -DskipTests
 ```
-Após agendamento da consulta, o médico vai ter as informações dos agendamentos dele naquele dia após efetuar o login. 
+4) Por fim, ainda com o terminal na raiz da aplicação, executar o comando:
+```
+$ docker-compose up
+```
+
+#Swagger
+Os endpoints estão disponíveis através do swagger no link abaixo: 
+```
+ $ http://localhost:8060/
+```
+Para acessar uma rota protegida deve-se realizar o login e adicionar o token retornado no swagger no formato:  
+
+```
+Bearer {{token}}
+```
 
 
-Requisitos:
-* Desenvolva uma aplicação REST utilizando Java 8 e Spring;
-* Banco de dados MySQL;
-* Clonar este repositório, criar uma nova branch e abrir um merge request para master;
+#Testes
 
+Para executar os testes basta executar o comando abaixo, via terminal: 
 
-Serão avaliados os seguintes itens:
-* Clareza do código;
-* Utilizar Java + Spring;
-* Se os requisitos descritos acima foram atendidos;
-* Se possui descrição clara de como montar o ambiente local e realizar os testes (se houverem);
-
-Em caso de dúvidas sobre o desafio, entre em contato.
-
-Lembre-se que uma boa aplicação é bem testada
+```
+ $ mvn test
+```
 
 
 
 
+Médicos cadastrados:
 
+```
+usuario: antonio.chacra
+senha: antonio.chacra 
 
+usuario: eduardo.mutarelli
+senha: eduardo.mutarelli 
+
+usuario: gilberto.camanho
+senha: gilberto.camanho 
