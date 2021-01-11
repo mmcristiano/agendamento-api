@@ -30,34 +30,7 @@ Para executar a aplicação basta executar o comando abaixo, via terminal:
  $ mvn spring-boot:run
 ```
 
-# Docker
 
-É possível subir a aplicação juntamente com o banco de dados, via docker.
-
-Passo a passo: 
-
-
-1) Descomentar as linhas no arquivo docker-compose.yml. 
-2) alterar o valor da propriedade 'spring.datasource.url' no arquivo 'application.properties' da aplicação.
-
-De:
-
-
-```
-jdbc:mysql://localhost:3306/agenda?createDatabaseIfNotExist=true
-```
-Para:
-```
-jdbc:mysql://mysqldb:3306/agenda?createDatabaseIfNotExist=true
-```
-3) Na raiz da aplicação, executar via terminal o comando abaixo: 
-```
- $  mvn package -DskipTests
-```
-4) Por fim, ainda com o terminal na raiz da aplicação, executar o comando:
-```
-$ docker-compose up
-```
 
 #Swagger
 Os endpoints estão disponíveis através do swagger no link abaixo: 
@@ -93,3 +66,33 @@ senha: eduardo.mutarelli
 
 usuario: gilberto.camanho
 senha: gilberto.camanho 
+```
+
+#Docker
+
+É possível subir a aplicação juntamente com o banco de dados, via docker.
+
+Passo a passo: 
+
+
+1) Descomentar as linhas no arquivo docker-compose.yml. 
+2) alterar o valor da propriedade 'spring.datasource.url' no arquivo 'application.properties' da aplicação.
+
+De:
+
+
+```
+jdbc:mysql://localhost:3306/agenda?createDatabaseIfNotExist=true
+```
+Para:
+```
+jdbc:mysql://mysqldb:3306/agenda?createDatabaseIfNotExist=true
+```
+3) Na raiz da aplicação, executar via terminal o comando abaixo: 
+```
+$  mvn package -DskipTests
+```
+4) Por fim, ainda com o terminal na raiz da aplicação, executar o comando:
+```
+$ docker-compose up
+```
