@@ -24,7 +24,7 @@ public class PacienteService {
     }
 
     public Paciente get(Long id) {
-        return repository.findById(id).orElseThrow( () -> new ServiceException("Paciente não encontrado."));
+        return repository.findTopById(id).orElseThrow( () -> new ServiceException("Paciente não encontrado."));
     }
 
     public void delete(Long id) {

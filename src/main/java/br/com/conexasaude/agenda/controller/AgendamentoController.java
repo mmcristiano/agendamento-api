@@ -36,7 +36,7 @@ public class AgendamentoController {
     private PacienteService pacienteService;
 
 
-    @ApiOperation(value = "Retorna uma lista de usuários")
+    @ApiOperation(value = "Realiza agendamento de consulta")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Retorna a consulta criada"),
             @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),

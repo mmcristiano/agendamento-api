@@ -54,7 +54,7 @@ public class LoginService {
             return medicoParser.parse(medico);
 
         } catch (BadCredentialsException e) {
-            throw new ServiceException("Credenciais Inválidas", e);
+            throw new BadCredentialsException("Credenciais Inválidas", e);
         }
 
     }

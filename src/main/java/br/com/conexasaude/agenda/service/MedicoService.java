@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -28,6 +29,11 @@ public class MedicoService implements UserDetailsService {
 
     public Medico getMedicoLogado() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (Objects.isNull(authentication)) {
+            throw new ServiceException("Não foi possível recuperar o usuário logado.");
+        }
+
 
         return getByUsuario(authentication.getPrincipal().toString());
     }
