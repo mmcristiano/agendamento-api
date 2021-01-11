@@ -1,13 +1,36 @@
 version: '3.4'
-
 services:
-
-  mysql-development:
+  mysqldb:
+    container_name: conexa-mysqldb
     image: mysql:5.7.22
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_USER: conexa
       MYSQL_PASSWORD: conexa!123
       MYSQL_DATABASE: agenda
+      TZ: America/Sao_Paulo
     ports:
       - "3306:3306"
+    networks:
+      - network
+#  api:
+#    container_name: api
+#    image: api
+#    restart: always
+#    build:
+#      context: .
+#      dockerfile: ./Dockerfile
+#    working_dir: /desafio-tecnico-backend-conexa
+#    environment:
+#      TZ: America/Sao_Paulo
+#    ports:
+#      - "8060:8060"
+#    command: mvn spring-boot:run
+#    depends_on:
+#      - mysqldb
+#    networks:
+#      - network
+networks:
+  network:
+    driver: bridge
