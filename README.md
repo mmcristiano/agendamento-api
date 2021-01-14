@@ -30,7 +30,7 @@ Para executar a aplicação basta executar o comando abaixo, via terminal:
 
 
 
-#Swagger
+# Swagger
 Os endpoints estão disponíveis através do swagger no link abaixo: 
 ```
  $ http://localhost:8060/
@@ -42,7 +42,7 @@ Bearer {{token}}
 ```
 
 
-#Testes
+# Testes
 
 Para executar os testes basta executar o comando abaixo, via terminal: 
 
@@ -66,7 +66,7 @@ usuario: gilberto.camanho
 senha: gilberto.camanho 
 ```
 
-#Docker
+# Docker
 
 É possível subir a aplicação juntamente com o banco de dados, via docker.
 
