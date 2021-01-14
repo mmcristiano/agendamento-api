@@ -1,4 +1,4 @@
-package br.com.conexasaude.agenda.security;
+package br.com.conexasaude.agenda.util;
 
 
 import br.com.conexasaude.agenda.model.Medico;

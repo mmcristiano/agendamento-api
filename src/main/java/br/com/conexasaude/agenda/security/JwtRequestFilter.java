@@ -2,6 +2,7 @@ package br.com.conexasaude.agenda.security;
 
 
 import br.com.conexasaude.agenda.config.Constantes;
+import br.com.conexasaude.agenda.util.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 
 import org.hibernate.service.spi.ServiceException;

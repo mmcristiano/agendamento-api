@@ -1,27 +1,25 @@
-package br.com.conexasaude.agenda;
+package br.com.conexasaude.agenda.controller;
+
 
 import br.com.conexasaude.agenda.dto.LoginDto;
-import br.com.conexasaude.agenda.repository.MedicoRepository;
-import br.com.conexasaude.agenda.repository.PacienteRepository;
+import br.com.conexasaude.agenda.dto.MedicoDto;
 import br.com.conexasaude.agenda.service.LoginService;
 import br.com.conexasaude.agenda.service.MedicoService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import br.com.conexasaude.agenda.util.JwtUtil;
+import br.com.conexasaude.agenda.util.ObjectMapperUtil;
 import org.hibernate.service.spi.ServiceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,10 +28,15 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class LoginTest {
 
-    MockMvc mockMvc;
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public class LoginControllerTest {
+
+    @Autowired
+    WebApplicationContext context;
+
+    @Autowired
+    JwtUtil jwtUtil;
 
     @Spy
     MedicoService medicoService = new MedicoService();
@@ -41,9 +44,12 @@ public class LoginTest {
     @Spy
     LoginService loginService = new LoginService();
 
+    @MockBean
+    LoginService service;
 
-    @Autowired
-    WebApplicationContext context;
+    MockMvc mockMvc;
+
+    private LoginDto loginDTO;
 
     @BeforeEach
     void setUp() {
@@ -51,6 +57,40 @@ public class LoginTest {
                 .webAppContextSetup(context)
                 .apply(springSecurity())
                 .build();
+
+        loginDTO = LoginDto.builder()
+                .usuario("antonio.chacra")
+                .senha("antonio.chacra")
+                .build();
+    }
+
+
+    @Test
+    @DisplayName("deve realizar login")
+    void deveRealizarLogin() throws Exception {
+        when(service.login(loginDTO)).thenReturn(MedicoDto.builder().build());
+
+        mockMvc.perform(
+                post("/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(ObjectMapperUtil.asJsonString(loginDTO))
+        ).andExpect(status().isOk());
+    }
+
+
+    @Test
+    @DisplayName("deve realizar logoff")
+    void deveRealizarLogoff() throws Exception {
+        String token = jwtUtil.generateToken(loginDTO.getUsuario());
+
+        mockMvc.perform(
+                post("/auth/logoff")
+                        .header(
+                                HttpHeaders.AUTHORIZATION,
+                                "Bearer " + token)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(ObjectMapperUtil.asJsonString(loginDTO))
+        ).andExpect(status().isOk());
     }
 
     @Test
@@ -83,7 +123,5 @@ public class LoginTest {
 
 
     }
-
-
 
 }
