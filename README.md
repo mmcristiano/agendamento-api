@@ -82,11 +82,11 @@ De:
 
 
 ```
-jdbc:mysql://localhost:3306/agenda?createDatabaseIfNotExist=true
+jdbc:mysql://localhost:3306/agenda?serverTimezone=America/Sao_Paulo&createDatabaseIfNotExist=true
 ```
 Para:
 ```
-jdbc:mysql://mysqldb:3306/agenda?createDatabaseIfNotExist=true
+jdbc:mysql://mysqldb:3306/agenda?serverTimezone=America/Sao_Paulo&createDatabaseIfNotExist=true
 ```
 3) Na raiz da aplicação, executar via terminal o comando abaixo: 
 ```
