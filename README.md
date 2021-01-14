@@ -1,6 +1,4 @@
-# Desafio Técnico backend Conexa
-
-Descrição:
+# Descrição
 
 API REST para médicos de plantão agendarem atendimentos com pacientes
 
